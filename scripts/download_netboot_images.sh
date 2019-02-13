@@ -3,8 +3,8 @@
 declare -a ubuntu_distros=("trusty" "xenial" "cosmic")
 
 download_coreos(){
-  wget -quiet http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz -P /tftpboot/coreos
-  wget -quiet http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz -P /tftpboot/coreos
+  wget --quiet http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz -P /tftpboot/coreos
+  wget --quiet http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz -P /tftpboot/coreos
 }
 
 download_ubuntu(){
