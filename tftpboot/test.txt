@@ -1,0 +1,8 @@
+This file is used to test the tftp server
+try:
+
+tftp ipaddress
+tftp> get test.txt
+tftp> quit
+
+If you are able to download this file then everything is working

@@ -1,0 +1,12 @@
+version: '2'
+services:
+  tftp:
+  image: 
+    build: .
+    ports:
+     - "69:69"
+     - "8080:80"
+    volumes:
+     - .:/tftpboot
+     - htdocs:/var/www/localhost/htdocs
+     - lighttpd_conf:/etc/lighttpd

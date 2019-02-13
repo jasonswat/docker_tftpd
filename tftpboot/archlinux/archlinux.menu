@@ -1,0 +1,6 @@
+LABEL 1
+        MENU LABEL Archlinux Netboot Environment
+        KERNEL archlinux/ipxe.lkrn
+        TEXT HELP
+        Boot to the archlinux netboot installer
+        ENDTEXT

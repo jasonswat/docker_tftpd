@@ -1,0 +1,7 @@
+LABEL 18
+        MENU LABEL DBAN Boot and Nuke
+        KERNEL DBAN/2.0/i386/dban.bzi
+        APPEND nuke="dwipe" silent floppy=0,16,cmos
+        TEXT HELP
+        Warning - This will erase your hard drive
+        ENDTEXT
