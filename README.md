@@ -1,4 +1,4 @@
-# Dockeriszed tftpd server
+# Dockerized tftpd server
 
 This is a work in progress
 
