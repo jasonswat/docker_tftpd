@@ -14,9 +14,9 @@ download_ubuntu(){
     wget -qO- ${url} | tar -xzv
     if [ "${distro}" = "cosmic" ]; then
       cp ./ubuntu-installer/amd64/pxelinux.0 /tftpboot/
-      cp ./ubuntu-installer/amd64/libcom32.c32 /tftpboot/
-      cp ./ubuntu-installer/amd64/libutil.c32 /tftpboot/
-      cp ./ubuntu-installer/amd64/ldlinux.c32 /tftpboot/
+      cp ./ubuntu-installer/amd64/boot-screens/libcom32.c32 /tftpboot/
+      cp ./ubuntu-installer/amd64/boot-screens/libutil.c32 /tftpboot/
+      cp ./ubuntu-installer/amd64/boot-screens/ldlinux.c32 /tftpboot/
       cp ./ubuntu-installer/amd64/boot-screens/vesamenu.c32 /tftpboot/
     fi
     mv ./ubuntu-installer/amd64/initrd.gz /tftpboot/ubuntu/${distro}/amd64
