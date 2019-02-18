@@ -7,7 +7,7 @@ if [ $status -ne 0 ]; then
   exit $status
 fi
 
-/usr/sbin/in.tftpd --user tftp --secure /tftpboot
+/usr/sbin/in.tftpd --listen --user tftp --secure /tftpboot
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start tftpd: $status"
