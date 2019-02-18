@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/usr/sbin/lighttpd start
+/usr/sbin/lighttpd -f /etc/lighttpd/lighttpd.conf start
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to lighttpd: $status"
