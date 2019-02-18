@@ -41,3 +41,9 @@ tftp> get test.txt
 tftp> quit
 cat test.txt
 ```
+
+If running on CoreOS make isn't included, you can buid make with this command:
+
+```
+docker run -it --rm -v /opt/bin:/out ubuntu:16.04 bash -c "apt-get update && apt-get -y install make && cp /usr/bin/make /out/make"
+```
