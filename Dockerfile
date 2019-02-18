@@ -18,6 +18,7 @@ RUN apt-get update && \
     apt-get install -y tftpd-hpa \
     inetutils-inetd \
     syslinux \
+    vim \
     wget \
     gettext-base \
     lighttpd && \
