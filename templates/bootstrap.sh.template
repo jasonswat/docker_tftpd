@@ -1,0 +1,3 @@
+#!/bin/bash
+curl -O ${CLOUD_CONFIG}
+sudo coreos-install -d ${DEVICE} -c cloud-config.yml coreos.autologin=tty1

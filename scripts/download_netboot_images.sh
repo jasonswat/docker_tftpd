@@ -25,5 +25,5 @@ download_ubuntu(){
   done
 }
 
-download_coreos
-download_ubuntu
+#download_coreos
+#download_ubuntu
