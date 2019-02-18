@@ -39,5 +39,5 @@ RUN chmod u+x /*.sh && \
 
 EXPOSE 69/udp 80/tcp
 
-CMD /usr/sbin/in.tftpd --foreground --user tftp --secure /tftpboot
 CMD /usr/sbin/lighttpd -D -f /etc/lighttpd/lighttpd.conf
+CMD /usr/sbin/in.tftpd --foreground --user tftp --secure /tftpboot
