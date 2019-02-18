@@ -33,6 +33,8 @@ docker/runshell: ## Run the container and open a shell in the container
 
 docker/stop: ## Stop and remove the docker image
 	docker stop tftpd_server
+
+docker/rmi: ## Stop and remove the docker image
 	docker rmi jasonswat/tftpd_server:latest
 
 .PHONY: build
