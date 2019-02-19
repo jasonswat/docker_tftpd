@@ -32,8 +32,9 @@ RUN apt-get update && \
     chmod u+x /*.sh && \
     apt-get -q clean
 
-RUN /download_netboot_images.sh && \
-    /bin/sh -c "envsubst < /ubuntu.desktop.preseed.template > /var/www/html/ubuntu.desktop.preseed" && \
+RUN /download_netboot_images.sh
+
+RUN /bin/sh -c "envsubst < /ubuntu.desktop.preseed.template > /var/www/html/ubuntu.desktop.preseed" && \
     /bin/sh -c "envsubst < /ubuntu.minimal.preseed.template > /var/www/html/ubuntu.minimal.preseed" && \
     /bin/sh -c "envsubst < /bootstrap.sh.template > /var/www/html/bootstrap.sh"
 

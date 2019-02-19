@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a ubuntu_distros=("cosmic" "xenial")
+declare -a ubuntu_distros=("trusty" "xenial" "cosmic")
 
 download_coreos(){
   wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz -P /tftpboot/coreos
