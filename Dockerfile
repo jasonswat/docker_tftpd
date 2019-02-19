@@ -14,6 +14,9 @@ ARG USERNAME
 ARG USER_PASSWORD
 ARG ROOT_PASSWORD
 
+ADD scripts/* /
+ADD templates/* /
+
 RUN apt-get update && \
     apt-get install -y tftpd-hpa \
     inetutils-inetd \
@@ -22,18 +25,15 @@ RUN apt-get update && \
     wget \
     gettext-base \
     lighttpd && \
+    /build_menu.sh && \
+    chmod u+x /*.sh && \
     apt-get -q clean
 
 COPY tftpboot /tftpboot
 
-ADD scripts/* /
-ADD templates/* /
-
 VOLUME /tftpboot
 
-RUN chmod u+x /*.sh && \
-    /download_netboot_images.sh && \
-    /build_menu.sh && \
+RUN /download_netboot_images.sh && \
     /bin/sh -c "envsubst < /ubuntu.desktop.preseed.template > /var/www/html/ubuntu.desktop.preseed" && \
     /bin/sh -c "envsubst < /ubuntu.minimal.preseed.template > /var/www/html/ubuntu.minimal.preseed" && \
     /bin/sh -c "envsubst < /bootstrap.sh.template > /var/www/html/bootstrap.sh"
