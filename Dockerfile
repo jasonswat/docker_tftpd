@@ -17,6 +17,9 @@ ARG ROOT_PASSWORD
 ADD scripts/* /
 ADD templates/* /
 
+COPY tftpboot /tftpboot
+VOLUME /tftpboot
+
 RUN apt-get update && \
     apt-get install -y tftpd-hpa \
     inetutils-inetd \
@@ -28,10 +31,6 @@ RUN apt-get update && \
     /build_menu.sh && \
     chmod u+x /*.sh && \
     apt-get -q clean
-
-COPY tftpboot /tftpboot
-
-VOLUME /tftpboot
 
 RUN /download_netboot_images.sh && \
     /bin/sh -c "envsubst < /ubuntu.desktop.preseed.template > /var/www/html/ubuntu.desktop.preseed" && \
