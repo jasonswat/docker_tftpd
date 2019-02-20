@@ -1,4 +1,3 @@
-# tftpd
 FROM ubuntu:16.04
 
 MAINTAINER Jason Swatniki jason.swat@gmail.com
@@ -18,9 +17,9 @@ ADD scripts/* /
 ADD templates/* /
 
 COPY tftpboot /tftpboot
-VOLUME /tftpboot
 
-RUN apt-get update && \
+RUN chmod u+x /*.sh && \
+    apt-get update && \
     apt-get install -y tftpd-hpa \
     inetutils-inetd \
     syslinux \
@@ -28,16 +27,15 @@ RUN apt-get update && \
     wget \
     gettext-base \
     lighttpd && \
-    /build_menu.sh && \
-    chmod u+x /*.sh && \
     apt-get -q clean
 
-RUN /download_netboot_images.sh
-
-RUN /bin/sh -c "envsubst < /ubuntu.desktop.preseed.template > /var/www/html/ubuntu.desktop.preseed" && \
+RUN /download_netboot_images.sh && \
+    /build_menu.sh && \
+    /bin/sh -c "envsubst < /ubuntu.desktop.preseed.template > /var/www/html/ubuntu.desktop.preseed" && \
     /bin/sh -c "envsubst < /ubuntu.minimal.preseed.template > /var/www/html/ubuntu.minimal.preseed" && \
     /bin/sh -c "envsubst < /bootstrap.sh.template > /var/www/html/bootstrap.sh"
 
+VOLUME /tftpboot
 EXPOSE 69/udp 80/tcp
 
 CMD ["/start.sh"]
