@@ -18,7 +18,7 @@ build_ubuntu_menu(){
     label=$(( ${distro} + 1 ))
     tee -a /tftpboot/ubuntu/ubuntu.menu <<EOF
 LABEL ${label}
-        MENU LABEL Ubuntu ${ubuntu_distros[${distro}]} (64-bit)
+        MENU LABEL Ubuntu ${ubuntu_distros[${distro}]} (64-bit) Desktop Install
         KERNEL ubuntu/${ubuntu_distros[${distro}]}/amd64/linux
         APPEND initrd=ubuntu/${ubuntu_distros[${distro}]}/amd64/initrd.gz auto locale=en_US.UTF-8 keyboard-configuration/layoutcode=us url=${HTTP_SERVER}/ubuntu.desktop.preseed netcfg/get_hostname=${HOSTNAME} vga=0x317
         TEXT HELP
