@@ -1,12 +1,6 @@
 version: '2'
 services:
   tftp:
-  image: 
-    build: .
-    ports:
-     - "69:69"
-     - "8080:80"
-    volumes:
-     - .:/tftpboot
-     - htdocs:/var/www/localhost/htdocs
-     - lighttpd_conf:/etc/lighttpd
+    image: jasonswat/tftpd_server
+    container_name: tftpd_server
+    ports: ['69:69/udp', '8080:80', '8082:8080']

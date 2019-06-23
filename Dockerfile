@@ -35,7 +35,15 @@ RUN /download_netboot_images.sh && \
     /bin/sh -c "envsubst < /ubuntu.minimal.preseed.template > /var/www/html/ubuntu.minimal.preseed" && \
     /bin/sh -c "envsubst < /bootstrap.sh.template > /var/www/html/bootstrap.sh"
 
+# install matchbox for coreos and ignition
+RUN wget https://github.com/coreos/matchbox/releases/download/v0.8.0/matchbox-v0.8.0-linux-amd64.tar.gz && \
+    tar -xzf matchbox-v0.8.0-linux-amd64.tar.gz && \
+    rm matchbox-v0.8.0-linux-amd64.tar.gz && \
+    cp matchbox-v0.8.0-linux-amd64/matchbox /usr/local/bin && \
+    mkdir -p /var/lib/matchbox/assets && \
+    rm -rf ./matchbox-v0.8.0-linux-amd64
+ 
 VOLUME /tftpboot
-EXPOSE 69/udp 80/tcp
+EXPOSE 69/udp 80/tcp 8080/tcp
 
 CMD ["/start.sh"]
