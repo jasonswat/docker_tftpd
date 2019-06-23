@@ -1,4 +1,5 @@
 # Dockerized tftpd server
+Dockerized tftpd server for PXE boot of ubuntu 14, 16, and coreos. Also an http server for config files. Added matchbox service for CoreOS ignition.
 
 ### Building the container
 
