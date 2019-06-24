@@ -1,0 +1,74 @@
+{
+  "ignition": {
+    "version": "2.1.0",
+    "config": {}
+  },
+  "storage": {
+    "disks": [{
+      "device": "/dev/sda",
+      "wipeTable": true,
+      "partitions": [{
+        "label": "ROOT",
+        "number": 0,
+        "size": 20480,
+        "start": 0
+      }]
+    }],
+  "filesystems": [{
+    "mount": {
+      "device": "/dev/sda1",
+      "format": "ext4",
+      "wipeFilesystem": true,
+      "options": [ "-L", "ROOT" ]
+     }
+   }]
+  },
+  "systemd": {
+     "units": [
+       {
+         "contents": "[Unit]\nDescription=Set hostname\n\n[Service]\nType=oneshot\nExecStart=/bin/sh -c \"sudo hostnamectl set-hostname hardcoreos\"\n",
+         "enabled": true,
+         "name": "set-hostname.service"
+       },
+         {
+         "name": "etcd2.service",
+         "enabled": true
+       },
+       {
+         "contents": "[Unit]\nBefore=remote-fs.target\n[Mount]\nWhat=192.168.10.184:/i-data/1c2707a0/video\nWhere=/data/video\nType=nfs\n[Install]\nWantedBy=remote-fs.target",
+         "enable": true,
+         "name": "data-video.mount"
+       },
+       {
+         "contents": "[Unit]\nBefore=remote-fs.target\n[Mount]\nWhat=192.168.10.184:/i-data/1c2707a0/photo\nWhere=/data/photo\nType=nfs\n[Install]\nWantedBy=remote-fs.target",
+         "enable": true,
+         "name": "data-photo.mount"
+       },
+       {
+         "contents": "[Unit]\nBefore=remote-fs.target\n[Mount]\nWhat=192.168.10.184:/i-data/1c2707a0/music\nWhere=/data/music\nType=nfs\n[Install]\nWantedBy=remote-fs.target",
+         "enable": true,
+         "name": "data-music.mount"
+       }
+     ]
+  },
+  "storage": {
+    "files": [{
+      "filesystem": "root",
+      "path": "/etc/environment",
+      "mode": 640,
+      "contents": { "source": "data:,COREOS_PRIVATE_IPV4=$private_ipv4" }
+     }]
+  },
+  "networkd": {},
+  "passwd": {
+    "users": [
+      {
+        "name": "deploy",
+        "sshAuthorizedKeys": [
+          "ssh-rsa" 
+          ],
+          "groups": [ "sudo", "docker" ]
+     }
+   ]
+  }
+}

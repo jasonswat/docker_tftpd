@@ -23,6 +23,7 @@ download_ubuntu(){
     mv ./ubuntu-installer/amd64/linux /tftpboot/ubuntu/${distro}/amd64
     rm -rf ./ubuntu-installer
   done
+  cp /boot/ipxe.lkrn /tftpboot/
 }
 
 download_coreos

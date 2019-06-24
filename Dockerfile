@@ -22,6 +22,7 @@ RUN chmod u+x /*.sh && \
     apt-get update && \
     apt-get install -y tftpd-hpa \
     inetutils-inetd \
+    grub-ipxe \
     syslinux \
     vim \
     wget \

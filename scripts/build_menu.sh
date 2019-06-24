@@ -10,6 +10,7 @@ LABEL 5
         INITRD coreos/coreos_production_pxe_image.cpio.gz
         APPEND coreos.autologin=tty1 cloud-config-url=${HTTP_SERVER}/bootstrap.sh
 EOF
+sed -i -e "s|%HTTP_SERVER%|${HTTP_SERVER}|g" /tftpboot/pxelinux.cfg/default
 }
 
 build_ubuntu_menu(){
