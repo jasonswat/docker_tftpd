@@ -27,10 +27,10 @@ build: ## Build the docker image
 
 matchbox/gen_certs: ## Generate selfsigned certs for matchbox gRCP
 	docker run --rm \
-		--name openssl \ 
-		--workdir "/tls" \
+		--name openssl \
+		-w /tls \
 		-e SAN="DNS.1:core,IP.1:192.168.10.150" \
-		-v "${PWD}/tls:/tls" \
+		-v "${PWD}/tls":/tls \
 		--entrypoint "/tls/start_cert-gen.sh" \
 		frapsoft/openssl
 
