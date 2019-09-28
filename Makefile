@@ -14,25 +14,25 @@ binary_check := $(foreach exec, docker, \
 
 build: ## Build the docker image
 	docker build --tag ${repo}/${image_name} \
-		     --build-arg TIME_ZONE=${TIME_ZONE} \
-		     --build-arg HTTP_SERVER=${HTTP_SERVER} \
-		     --build-arg HOSTNAME=${HOSTNAME} \
-		     --build-arg PARTMAN_GUIDED_SIZE=${PARTMAN_GUIDED_SIZE} \
-		     --build-arg CLOUD_CONFIG=${CLOUD_CONFIG} \
-		     --build-arg DEVICE=${DEVICE} \
-				 --build-arg USERNAME=${USERNAME} \
-				 --build-arg USER_PASSWORD=${USER_PASSWORD} \
-				 --build-arg ROOT_PASSWORD=${ROOT_PASSWORD} \
-				 --build-arg SSH_AUTHORIZED_KEY=${SSH_AUTHORIZED_KEY} . 
+		    --build-arg TIME_ZONE=${TIME_ZONE} \
+		    --build-arg HTTP_SERVER=${HTTP_SERVER} \
+		    --build-arg HOSTNAME=${HOSTNAME} \
+		    --build-arg PARTMAN_GUIDED_SIZE=${PARTMAN_GUIDED_SIZE} \
+		    --build-arg CLOUD_CONFIG=${CLOUD_CONFIG} \
+		    --build-arg DEVICE=${DEVICE} \
+				--build-arg USERNAME=${USERNAME} \
+				--build-arg USER_PASSWORD=${USER_PASSWORD} \
+				--build-arg ROOT_PASSWORD=${ROOT_PASSWORD} \
+				--build-arg SSH_AUTHORIZED_KEY=${SSH_AUTHORIZED_KEY} . 
 
 matchbox/gen_certs: ## Generate selfsigned certs for matchbox gRCP
 	docker run --rm \
 		--name openssl \ 
-	  --workdir "/tls" \
-    -e SAN="DNS.1:core,IP.1:192.168.10.150" \
-	  -v "${PWD}/tls:/tls" \
-	  --entrypoint "/tls/start_cert-gen.sh" \
-	  frapsoft/openssl
+		--workdir "/tls" \
+		-e SAN="DNS.1:core,IP.1:192.168.10.150" \
+		-v "${PWD}/tls:/tls" \
+		--entrypoint "/tls/start_cert-gen.sh" \
+		frapsoft/openssl
 
 tftp_server/run: ## Run the docker container
 	docker run -d --rm \
