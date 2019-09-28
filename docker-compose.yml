@@ -1,6 +1,19 @@
 version: '2'
 services:
+  cert-gen:
+    image: frapsoft/openssl
+    container_name: cert-gen
+    entrypoint: "/tls/start_cert-gen.sh"
+    working_dir: "/tls"
+    environment:
+      "SAN": "DNS.1:core,IP.1:192.168.10.150"
+    volumes:
+      - "${PWD}/tls:/tls"
   tftp:
     image: jasonswat/tftpd_server
     container_name: tftpd_server
-    ports: ['69:69/udp', '8080:80', '8082:8080']
+    ports: ['69:69/udp', '8080:80', '8082:8080', '8081:8081']
+    environment:
+      "MATCHBOX_RPC_ADDRESS": "0.0.0.0:8081"
+    volumes:
+      - "${PWD}/tls:/etc/matchbox"

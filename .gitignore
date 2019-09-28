@@ -1,2 +1,4 @@
 *.swp
 secrets
+*.crt
+*.key

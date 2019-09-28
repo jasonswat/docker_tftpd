@@ -25,6 +25,15 @@ make docker/run
 Additional DNSMasq Options
 dhcp-boot=pxelinux.0,,"192.168.10.150"
 ```
+### Ports
+
+These are the ports that are exported on the host:
+
+| service | protocol | docker port | host port |
+| tftpd | udp | 69 | 69 |
+| light_http | tcp | 80 | 8080 |
+| matchbox | tcp 8080 | 8082 |
+| matchbox gRPC | tcp 8081 | 8081 |
 
 ### Troubleshooting
 

@@ -26,10 +26,16 @@ build: ## Build the docker image
 				 --build-arg SSH_AUTHORIZED_KEY=${SSH_AUTHORIZED_KEY} . 
 
 docker/run: ## Run the docker container
-	docker run -d --rm -p 8080:80 -p 69:69/udp --name tftpd_server jasonswat/tftpd_server:latest
+	docker run -d --rm \
+		-p 8080:80 \
+		-p 69:69/udp \
+		-p 8082:8080 \
+		-p 8081:8081 \
+		-v "${PWD}/tls:/etc/matchbox" \
+		--name tftpd_server \
+		jasonswat/tftpd_server:latest
 
-docker/runshell: ## Run the container and open a shell in the container
-	docker run -it --rm -p 8080:80 -p 69:69/udp --name tftpd_server jasonswat/tftpd_server:latest bash
+docker/runshell: docker/run bash ## Run the container and open a shell in the container
 
 docker/stop: ## Stop and remove the docker image
 	docker stop tftpd_server

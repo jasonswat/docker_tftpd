@@ -26,7 +26,7 @@
   "systemd": {
      "units": [
        {
-         "contents": "[Unit]\nDescription=Set hostname\n\n[Service]\nType=oneshot\nExecStart=/bin/sh -c \"sudo hostnamectl set-hostname hardcoreos\"\n",
+         "contents": "[Unit]\nDescription=Set hostname\n\n[Service]\nType=oneshot\nExecStart=/bin/sh -c \"sudo hostnamectl set-hostname hardcoreos\"\n\n[Install]\nWantedBy=multi-user.target\n",
          "enabled": true,
          "name": "set-hostname.service"
        },
@@ -65,7 +65,7 @@
       {
         "name": "deploy",
         "sshAuthorizedKeys": [
-          "ssh-rsa" 
+          "$SSH_AUTHORIZED_KEY"
           ],
           "groups": [ "sudo", "docker" ]
      }
