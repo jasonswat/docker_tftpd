@@ -25,7 +25,16 @@ build: ## Build the docker image
 				 --build-arg ROOT_PASSWORD=${ROOT_PASSWORD} \
 				 --build-arg SSH_AUTHORIZED_KEY=${SSH_AUTHORIZED_KEY} . 
 
-docker/run: ## Run the docker container
+matchbox/gen_certs: ## Generate selfsigned certs for matchbox gRCP
+	docker run --rm \
+		--name openssl \ 
+	  --workdir "/tls" \
+    -e SAN="DNS.1:core,IP.1:192.168.10.150" \
+	  -v "${PWD}/tls:/tls" \
+	  --entrypoint "/tls/start_cert-gen.sh" \
+	  frapsoft/openssl
+
+tftp_server/run: ## Run the docker container
 	docker run -d --rm \
 		-p 8080:80 \
 		-p 69:69/udp \
@@ -35,12 +44,12 @@ docker/run: ## Run the docker container
 		--name tftpd_server \
 		jasonswat/tftpd_server:latest
 
-docker/runshell: docker/run bash ## Run the container and open a shell in the container
+tftp_server/runshell: docker/run bash ## Run the container and open a shell in the container
 
-docker/stop: ## Stop and remove the docker image
+tftp_server/stop: ## Stop and remove the docker image
 	docker stop tftpd_server
 
-docker/rmi: ## Stop and remove the docker image
+tftp_server/rmi: ## Stop and remove the docker image
 	docker rmi jasonswat/tftpd_server:latest
 
 .PHONY: build
