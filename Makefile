@@ -40,7 +40,8 @@ tftp_server/run: ## Run the docker container
 		-p 69:69/udp \
 		-p 8082:8080 \
 		-p 8081:8081 \
-		-v "${PWD}/tls:/etc/matchbox" \
+		-e MATCHBOX_RPC_ADDRESS="0.0.0.0:8081" \
+		-v "${PWD}/tls":/etc/matchbox \
 		--name tftpd_server \
 		jasonswat/tftpd_server:latest
 
