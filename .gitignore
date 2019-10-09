@@ -3,3 +3,4 @@ secrets
 *.crt
 *.key
 terraform.tfvars
+terraform/.terraform
