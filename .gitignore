@@ -2,3 +2,4 @@
 secrets
 *.crt
 *.key
+terraform.tfvars

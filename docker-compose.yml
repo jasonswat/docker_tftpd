@@ -6,7 +6,8 @@ services:
     entrypoint: "/tls/start_cert-gen.sh"
     working_dir: "/tls"
     environment:
-      "SAN": "DNS.1:core,IP.1:192.168.10.150"
+        "SAN": "DNS.1:localhost"
+      #  "SAN": "DNS.1:core,IP.1:192.168.10.150"
     volumes:
       - "${PWD}/tls:/tls"
   tftp:
@@ -15,5 +16,6 @@ services:
     ports: ['69:69/udp', '8080:80', '8082:8080', '8081:8081']
     environment:
       "MATCHBOX_RPC_ADDRESS": "0.0.0.0:8081"
+      "MATCHBOX_ASSETS_PATH": "/tftpboot/coreos/"
     volumes:
       - "${PWD}/tls:/etc/matchbox"

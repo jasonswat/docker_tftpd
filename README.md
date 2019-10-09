@@ -22,9 +22,26 @@ make docker/run
 5. Update your DHCP server options to point to the new tftpserver:
 
 ```
-Additional DNSMasq Options
+Additional DNSMasq Options:
 dhcp-boot=pxelinux.0,,"192.168.10.150"
 ```
+
+### Matchbox
+
+Info on network setup: https://coreos.com/matchbox/docs/latest/network-setup.html
+
+Added this the the tftp server pxelinux.cfg/default 
+
+MATCHBOX_SERVER environmwt variable for http://<matchbox_server>:8082
+
+```
+LABEL iPXE CoreOS Install
+KERNEL ipxe.lkrn
+APPEND dhcp && chain %MATCHBOX_SERVER%/boot.ipxe
+```
+
+ipxe.lkrn is installed in the Docker build see scripts/download_netboot_images.sh 
+
 ### Ports
 
 These are the ports that are exported on the host:

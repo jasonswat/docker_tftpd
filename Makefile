@@ -12,6 +12,15 @@ help: ## this help
 binary_check := $(foreach exec, docker, \
         $(if $(shell which $(exec)),"",$(error "No $(exec) in PATH")))
 
+terraform/plan:  ## run terraform plan
+	env && \
+	cd terraform && \
+	terraform plan
+
+terraform/apply: ## run terraform apply
+	cd terraform && \
+	terraform apply	
+	
 build: ## Build the docker image
 	docker build --tag ${repo}/${image_name} \
 		    --build-arg TIME_ZONE=${TIME_ZONE} \
@@ -23,13 +32,14 @@ build: ## Build the docker image
 				--build-arg USERNAME=${USERNAME} \
 				--build-arg USER_PASSWORD=${USER_PASSWORD} \
 				--build-arg ROOT_PASSWORD=${ROOT_PASSWORD} \
-				--build-arg SSH_AUTHORIZED_KEY=${SSH_AUTHORIZED_KEY} . 
+				--build-arg SSH_AUTHORIZED_KEY=${TF_VAR_ssh_authorized_key} . 
 
 matchbox/gen_certs: ## Generate selfsigned certs for matchbox gRCP
 	docker run --rm \
 		--name openssl \
 		-w /tls \
 		-e SAN="DNS.1:core,IP.1:192.168.10.150" \
+		-e MATCHBOX_ASSETS_PATH="/tftpboot/coreos/" \
 		-v "${PWD}/tls":/tls \
 		--entrypoint "/tls/start_cert-gen.sh" \
 		frapsoft/openssl
