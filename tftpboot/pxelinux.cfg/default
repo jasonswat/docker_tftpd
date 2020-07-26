@@ -5,13 +5,13 @@ PROMPT 0
 MENU INCLUDE pxelinux.cfg/pxe.conf
 NOESCAPE 1
 LABEL BootLocal
-        localboot
+        localboot 0
         TEXT HELP
         Boot to local hard disk
         ENDTEXT
-LABEL iPXE
+LABEL iPXE CoreOS Install
 KERNEL ipxe.lkrn
-APPEND dhcp && chain http://%HTTP_SERVER%:8082/boot.ipxe
+APPEND dhcp && chain %MATCHBOX_SERVER%/boot.ipxe
 MENU BEGIN CoreOS
 MENU TITLE CoreOS
         LABEL Previous

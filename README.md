@@ -31,6 +31,22 @@ DNSMasq Options for UEFI Boot with grub2
 dhcp-boot=grubnetx64.efi.signed,,1.1.1.1
 ```
 
+### Matchbox
+
+Info on network setup: https://coreos.com/matchbox/docs/latest/network-setup.html
+
+Added this the the tftp server pxelinux.cfg/default 
+
+MATCHBOX_SERVER environment variable for http://<matchbox_server>:8082
+
+```
+LABEL iPXE CoreOS Install
+KERNEL ipxe.lkrn
+APPEND dhcp && chain %MATCHBOX_SERVER%/boot.ipxe
+```
+
+ipxe.lkrn is installed in the Docker build see scripts/download_netboot_images.sh 
+
 ### Ports
 
 These are the ports that are exported on the host:

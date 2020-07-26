@@ -1,0 +1,92 @@
+hostname: hardcoreos
+systemd:
+  units:    
+    - name: plex.service
+      command: start
+      contents: |
+        [Unit]
+        Description=plex
+        Requires=docker.service
+        After=docker.service
+       
+        [Service]
+        TimeoutSec=0
+        Restart=on-failure
+        RestartSec=60s
+
+        ExecStop=-/usr/bin/docker stop 3d43c4fe2ef3
+        
+        ExecStartPre=-/usr/bin/docker kill plex
+        ExecStartPre=-/usr/bin/docker rm plex
+        ExecStart=/usr/bin/docker run --rm \
+          --name plex \
+          -e TZ="America/Los_Angeles" \
+          -e PLEX_CLAIM="<claimToken>" \
+          -p 9013:9013 \
+          -p 32400:32400/tcp \
+          -p 3005:3005/tcp \
+          -p 8324:8324/tcp \
+          -p 32469:32469/tcp \
+          -p 1900:1900/udp \
+          -p 32410:32410/udp \
+          -p 32412:32412/udp \
+          -p 32413:32413/udp \
+          -p 32414:32414/udp \
+          -v /plex/config:/config \
+          -v /plex/transcode:/transcode \
+          -v /data:/data:ro \
+          plexinc/pms-docker 
+
+    - name: dokuwiki.service
+      command: start
+      contents: |
+        [Unit]
+        Description=dokuwiki
+        Requires=docker.service
+        After=docker.service
+
+        [Service]
+        TimeoutSec=0
+        Restart=on-failure
+        RestartSec=60s
+
+        ExecStart=/usr/bin/docker start f4ca82ff1b73 
+        ExecStop=/usr/bin/docker stop f4ca82ff1b73
+
+    - name: data-photo.mount
+      command: start
+      enable: true
+      contents: |
+        [Unit]
+        Description=NFS Photo Directory
+        DefaultDependencies=no
+        Conflicts=umount.target
+        Before=dbus.service
+        Requires=network-online.target
+        Requires=rpc-statd.service
+        After=network-online.target
+        After=rpc-statd.service
+
+        [Mount]
+        What=192.168.10.184:/i-data/1c2707a0/photo
+        Where=/data/photo
+        Type=nfs
+        Options=ro
+
+    - name: data-music.mount
+      enable: true
+      contents: |
+        [Unit]
+        Description=NFS Music Directory
+        Conflicts=umount.target
+        Before=dbus.service
+        Requires=network-online.target
+        Requires=rpc-statd.service
+        After=network-online.target
+        After=rpc-statd.service
+
+        [Mount]
+        What=192.168.10.184:/i-data/1c2707a0/music
+        Where=/data/music
+        Type=nfs
+        Options=ro
