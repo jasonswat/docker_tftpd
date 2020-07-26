@@ -19,12 +19,18 @@ make build
 make docker/run
 ```
 
-5. Update your DHCP server options to point to the new tftpserver:
+5. Update your DHCP server options to point to the new tftpserver (swap 1.1.1.1 with the ip of the tftp server):
 
+DNSMasq options for PXE Boot
 ```
-Additional DNSMasq Options
-dhcp-boot=pxelinux.0,,"192.168.10.150"
+dhcp-boot=pxelinux.0,,1.1.1.1
 ```
+
+DNSMasq Options for UEFI Boot with grub2
+```
+dhcp-boot=grubnetx64.efi.signed,,1.1.1.1
+```
+
 ### Ports
 
 These are the ports that are exported on the host:

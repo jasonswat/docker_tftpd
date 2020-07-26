@@ -2,13 +2,13 @@
 
 declare -a ubuntu_distros=("xenial" "cosmic")
 
-build_coreos_menu(){
-    tee /tftpboot/coreos/coreos.menu <<EOF
+build_flatcar_menu(){
+    tee /tftpboot/flatcar/flatcar.menu <<EOF
 LABEL 5
-        MENU LABEL CoreOS (64-bit)
-        KERNEL coreos/coreos_production_pxe.vmlinuz
-        INITRD coreos/coreos_production_pxe_image.cpio.gz
-        APPEND coreos.autologin=tty1 cloud-config-url=${HTTP_SERVER}/bootstrap.sh
+        MENU LABEL FlatcarOS (64-bit)
+        KERNEL flatcar/flatcar_production_pxe.vmlinuz
+        INITRD flatcar/flatcar_production_pxe_image.cpio.gz
+        APPEND flatcar.autologin=tty1 cloud-config-url=${HTTP_SERVER}/bootstrap.sh
 EOF
 sed -i -e "s|%HTTP_SERVER%|${HTTP_SERVER}|g" /tftpboot/pxelinux.cfg/default
 }
@@ -35,5 +35,5 @@ LABEL ${label}.5
 EOF
   done
 }
-build_coreos_menu
+build_flatcar_menu
 build_ubuntu_menu

@@ -2,9 +2,9 @@
 
 declare -a ubuntu_distros=("xenial" "cosmic")
 
-download_coreos(){
-  wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz -P /tftpboot/coreos
-  wget http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz -P /tftpboot/coreos
+download_flatcar(){
+  wget http://stable.release.flatcar-linux.net/amd64-usr/current/flatcar_production_pxe.vmlinuz -P /tftpboot/flatcar
+  wget https://stable.release.flatcar-linux.net/amd64-usr/current/flatcar_production_pxe_image.cpio.gz -P /tftpboot/flatcar
 }
 
 download_ubuntu(){
@@ -26,5 +26,5 @@ download_ubuntu(){
   cp /boot/ipxe.lkrn /tftpboot/
 }
 
-download_coreos
+download_flatcar
 download_ubuntu

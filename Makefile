@@ -5,6 +5,7 @@ include secrets
 
 image_name="tftpd_server"
 repo="jasonswat"
+version=0.0.1
 
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[\/a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' Makefile
@@ -13,7 +14,7 @@ binary_check := $(foreach exec, docker, \
         $(if $(shell which $(exec)),"",$(error "No $(exec) in PATH")))
 
 build: ## Build the docker image
-	docker build --tag ${repo}/${image_name} \
+	docker build --tag ${repo}/${image_name}:${version} \
 		    --build-arg TIME_ZONE=${TIME_ZONE} \
 		    --build-arg HTTP_SERVER=${HTTP_SERVER} \
 		    --build-arg HOSTNAME=${HOSTNAME} \
@@ -43,9 +44,7 @@ tftp_server/run: ## Run the docker container
 		-e MATCHBOX_RPC_ADDRESS="0.0.0.0:8081" \
 		-v "${PWD}/tls":/etc/matchbox \
 		--name tftpd_server \
-		jasonswat/tftpd_server:latest
-
-tftp_server/runshell: docker/run bash ## Run the container and open a shell in the container
+		jasonswat/tftpd_server:${version}
 
 tftp_server/stop: ## Stop and remove the docker image
 	docker stop tftpd_server

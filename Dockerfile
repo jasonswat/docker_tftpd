@@ -30,6 +30,9 @@ RUN chmod u+x /*.sh && \
     lighttpd && \
     apt-get -q clean
 
+# signed grubnet image:
+RUN wget http://archive.ubuntu.com/ubuntu/dists/trusty/main/uefi/grub2-amd64/current/grubnetx64.efi.signed -P /tftpboot
+
 RUN /download_netboot_images.sh && \
     /build_menu.sh && \
     /bin/sh -c "envsubst < /ubuntu.desktop.preseed.template > /var/www/html/ubuntu.desktop.preseed" && \
@@ -37,12 +40,12 @@ RUN /download_netboot_images.sh && \
     /bin/sh -c "envsubst < /bootstrap.sh.template > /var/www/html/bootstrap.sh"
 
 # install matchbox for coreos and ignition
-RUN wget https://github.com/coreos/matchbox/releases/download/v0.8.0/matchbox-v0.8.0-linux-amd64.tar.gz && \
-    tar -xzf matchbox-v0.8.0-linux-amd64.tar.gz && \
-    rm matchbox-v0.8.0-linux-amd64.tar.gz && \
-    cp matchbox-v0.8.0-linux-amd64/matchbox /usr/local/bin && \
+RUN wget https://github.com/poseidon/matchbox/releases/download/v0.8.3/matchbox-v0.8.3-linux-amd64.tar.gz && \
+    tar -xzf matchbox-v0.8.3-linux-amd64.tar.gz && \
+    rm matchbox-v0.8.3-linux-amd64.tar.gz && \
+    cp matchbox-v0.8.3-linux-amd64/matchbox /usr/local/bin && \
     mkdir -p /var/lib/matchbox/assets && \
-    rm -rf ./matchbox-v0.8.0-linux-amd64
+    rm -rf ./matchbox-v0.8.3-linux-amd64
  
 VOLUME /tftpboot
 EXPOSE 69/udp 80/tcp 8080/tcp
