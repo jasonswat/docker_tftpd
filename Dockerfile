@@ -37,6 +37,7 @@ RUN /download_netboot_images.sh && \
     /build_menu.sh && \
     /bin/sh -c "envsubst < /ubuntu.desktop.preseed.template > /var/www/html/ubuntu.desktop.preseed" && \
     /bin/sh -c "envsubst < /ubuntu.minimal.preseed.template > /var/www/html/ubuntu.minimal.preseed" && \
+    /bin/sh -c "envsubst < /ignition.json.template > /var/www/html/ignition.json" && \
     /bin/sh -c "envsubst < /bootstrap.sh.template > /var/www/html/bootstrap.sh"
 
 # install matchbox for coreos and ignition

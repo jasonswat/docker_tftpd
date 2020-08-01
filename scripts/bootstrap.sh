@@ -1,4 +1,3 @@
 #!/bin/bash
-#
-curl -O ${HTTP_SERVER}/cloud-config.yml
-sudo coreos-install -d /dev/sda -c cloud-config.yaml coreos.autologin=tty1
+curl -O ${HTTP_SERVER}/ignition.json
+sudo flatcar-install -d /dev/sda -i ignition.json
